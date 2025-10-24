@@ -1,9 +1,31 @@
+/* Loading Fonts */
+@font-face {
+    font-family: "Work Sans";
+    src: url("./assets/fonts/WorkSans-VariableFont_wght.ttf") format("truetype");
+    /* variable font covers all font weights */
+    font-weight: 100 900; 
+    font-style: normal;
+    /* shows text immediately if the local font doesn't load right away */
+    font-display: swap; 
+}
+
+@font-face {
+    font-family: "Work Sans";
+    src: url("./assets/fonts/WorkSans-Italic-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
 /* Root-level CSS variables (from the style guide) */
 :root {
     --white: hsl(0, 100%, 100%);
-    --purple 100: hsl(275, 100%, 97%);
-    --purple 600: hsl(292, 16%, 49%);
-    --purple 950: hsl(292, 42%, 14%);
+    --purple-100: hsl(275, 100%, 97%);
+    --purple-600: hsl(292, 16%, 49%);
+    --purple-950: hsl(292, 42%, 14%);
+    --accent: hsl(275 100% 50%);
+    --radius: 18px;
+    --shadow: 0 25px 40px rgba(0,0,0, 0.1);
 }
 
 /* Base styles */
@@ -14,4 +36,190 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+/* Makes sure the elements on the page stretch the entire height of the browser */
+html,
+body {
+    min-height: 100dvh;
+}
+
+/* Body Styling */
+
+body {
+    /* declaring fallback font for the local font */
+    font-family: "Work Sans", sans-serif; 
+    background: var(--white);
+    color: var(--purple-950);
+    /* Sets line height 1.5 times the font size */
+    line-height: 1.5;
+    background:
+        url("./assets/images/background-pattern-desktop.svg") no-repeat top center / contain,
+        linear-gradient(
+            to bottom,
+            var(--purple-950) 0%,
+            var(--purple-950) 30%,
+            var(--purple-100) 30%,
+            var(--purple-100) 100%
+    );
+}
+
+
+/* FAQ box styling */
+
+.container {
+    /* Keeps FAQ box from stretching too wide */
+    max-width: 680px;
+    /* Centering FAQ box horizontally and vertically */
+    background: var(--white);
+    /* Note: 1rem = to the px of the root element */
+    padding: 2rem; 
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    /* Centering FAQ box */
+    margin: 6rem auto;
+}
+
+/* More padding and larger corners on desktop */
+@media (min-width: 768px) {
+    .container{
+        padding: 2.5rem 3rem;
+        border-radius: 20px;
+    }
+}
+
+/* Purple star icon before the title */
+/* Adding purple star icon before the title */
+h1 {
+    /* Putting the icon and text in one line */
+    display: flex;
+    /* Centering FAQs and star icon */
+    align-items: center;
+    /* Spacing between the icon and the text */
+    gap: .6rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    /* Spacing between the heading and FAQs */
+    margin-bottom: 1.5rem;
+}
+
+/* Purple star before FAQS text */
+h1::before {
+    /* Note: inserts an empty string */
+    content:"";
+    width: 36px;
+    height: 36px;
+    background: url("./assets/images/icon-star.svg") no-repeat center;
+    /* Scaling background image as large as possible while still staying in the element */
+    background-size: contain;
+}
+
+/* Bigger heading on desktops */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+}
+
+/* Accordian area of HTML */
+
+/* Divider line between FAQ items */
+details {
+    /* Note: 15% is how much of the var color is used in the mix */
+    border-top: 1px solid color-mix(in oklab, var(--purple-600) 15%, transparent);
+}
+
+/* No line above first question */
+details:first-of-type {
+    border-top: none;
+}
+
+/* Question styling */
+summary {
+    /* Removing arrow marker */
+    list-style: none;
+    cursor: pointer;
+    font-weight: 700;
+    /* Positioning for custom icon */
+    position: relative;
+    /* Space on the right for the icon */
+    padding: 1rem 3rem 1rem 0;
+    /* Tap size on mobile */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    /* Removing browsers default outline */
+    outline: none;
+}
+
+/* Hides default disclosure arrow (Chrome/Safari) */
+summary::-webkit-details-marker { display: none; }
+
+/* Custom plus and minus icons */
+/* Plus icon */
+summary::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    /* Pushing icon from right edge */
+    right: .25rem;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-image: url("./assets/images/icon-plus.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 28px;
+}
+
+/* Minus icon */
+details[open] summary::after {
+    background-image: url("./assets/images/icon-minus.svg");
+}
+
+/* Inside details */
+details > p {
+    color: var(--purple-600);
+    margin: .5rem 0 1rem;
+    padding-right: 3rem;
+    line-height: 1.5;
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  body {
+    min-height: 100dvh;
+    background:
+      url("./assets/images/background-pattern-mobile.svg")
+        no-repeat top center / contain,
+  }
+
+  /* Spacing for the FAQ box */
+  .container {
+    /* top, sides, bottom */
+    margin: 2rem 1rem 4rem;   
+    padding: 1.5rem;
+    border-radius: 14px;
+    box-shadow: 0 32px 64px hsl(292 42% 14% / 0.20);
+  }
+
+  /* Adjusting headings and icons for smaller screens */
+  h1 {
+    font-size: 2rem;
+    gap: 0.75rem;
+  }
+
+  h1::before {
+    width: 24px;
+    height: 24px;
+  }
+
+  summary {
+    padding-right: 2.5rem;
+  }
+
+  summary::after {
+    right: 0.5rem;
+  }
 }
